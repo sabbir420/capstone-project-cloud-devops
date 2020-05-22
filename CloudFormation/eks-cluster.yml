@@ -8,6 +8,13 @@ Parameters:
     Type: String
 
 Resources:
+  ClusterInstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Path: "/"
+      Roles:
+        - !Ref ClusterRole
+
   ClusterRole:
     Type: AWS::IAM::Role
     Properties:
@@ -20,8 +27,11 @@ Resources:
                 - eks.amazonaws.com
             Action:
               - sts:AssumeRole
+      Path: "/"
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/AmazonEKSClusterPolicy
+        - arn:aws:iam::aws:policy/AmazonEKSServicePolicy
+        - arn:aws:iam::aws:policy/ElasticLoadBalancingFullAccess
 
   CapstoneEKS:
     Type: AWS::EKS::Cluster

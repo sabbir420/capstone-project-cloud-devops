@@ -1,0 +1,14 @@
+[
+  {
+    "ParameterKey": "EnvironmentName",
+    "ParameterValue": "CapstoneProject"
+  },
+  {
+    "ParameterKey": "KeyJenkinsSSH",
+    "ParameterValue": "custom-key-pair"
+  },
+  {
+    "ParameterKey": "JenkinsImageID",
+    "ParameterValue": "ami-0d1cd67c26f5fca19"
+  }
+]
