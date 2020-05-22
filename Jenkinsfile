@@ -14,9 +14,9 @@ pipeline {
          stage('Build and Push Docker Image') {
               steps {
                   withDockerRegistry([url: "", credentialsId: "docker-hub"]) {
-                      sh 'docker build -t sabbir33/udacity-capstone-project .'
-                      sh "docker tag sabbir33/udacity-capstone-project"
-                      sh 'docker push sabbir33/udacity-capstone-project'
+                      sh 'docker build -t capstone-project-cloud-devops .'
+                      sh "docker tag capstone-project-cloud-devops"
+                      sh 'docker push sabbir33/capstone-project-cloud-devops'
                   }
               }
          }
