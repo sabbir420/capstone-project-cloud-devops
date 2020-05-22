@@ -1,0 +1,161 @@
+Description: >
+  Capstone project for Cloud DevOps Engineering Nanodegree
+  Author - Sabbir Hossain
+
+Parameters:
+  EnvironmentName:
+    Description: An Environment name that will be prefixed to resources
+    Type: String
+
+  ImageID:
+    Description: An image ID for EC2 Instance
+    Type: String
+
+  KeyPairName:
+    Description: The EC2 Key Pair to allow SSH access to the instances
+    Type: AWS::EC2::KeyPair::KeyName
+
+  DesiredInstances:
+    Description: How many instances should be created.
+    Type: Number
+
+  MinSize:
+    Description: Minimum number of web application servers
+    Type: String
+
+  MaxSize:
+    Description: Maximum number of web application servers
+    Type: String
+
+Resources:
+  InstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Path: "/"
+      Roles:
+        - !Ref InstanceRole
+  InstanceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - ec2.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Path: "/"
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
+        - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
+        - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
+  NodesSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Security group for the nodes.
+      VpcId:
+        Fn::ImportValue: !Sub "${EnvironmentName}-VPCID"
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 0
+          ToPort: 65535
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 1025
+          ToPort: 65535
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: 0.0.0.0/0
+      SecurityGroupEgress:
+        - IpProtocol: tcp
+          FromPort: 0
+          ToPort: 65535
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 1025
+          ToPort: 65535
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: !Sub
+            - "kubernetes.io/cluster/${EksId}"
+            - EksId:
+                Fn::ImportValue: !Sub "${EnvironmentName}-EKS"
+          Value: "owned"
+  NodesAutoScalingGroup:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    Properties:
+      DesiredCapacity: !Sub ${DesiredInstances}
+      LaunchConfigurationName: !Ref LaunchConfiguration
+      MinSize: !Ref MinSize
+      MaxSize: !Ref MaxSize
+      VPCZoneIdentifier:
+        Fn::Split:
+          - ","
+          - Fn::ImportValue:
+              Fn::Sub: ${EnvironmentName}-PUB-NETS
+      Tags:
+        - Key: Name
+          Value: !Sub
+            - "${EksId}-CapstoneNodesGroup-Node"
+            - EksId:
+                Fn::ImportValue: !Sub "${EnvironmentName}-EKS"
+          PropagateAtLaunch: "true"
+        - Key: !Sub
+            - "kubernetes.io/cluster/${EksId}"
+            - EksId:
+                Fn::ImportValue: !Sub "${EnvironmentName}-EKS"
+          Value: "owned"
+          PropagateAtLaunch: "true"
+    UpdatePolicy:
+      AutoScalingRollingUpdate:
+        MaxBatchSize: "1"
+        MinInstancesInService: 3
+        PauseTime: "PT5M"
+
+  LaunchConfiguration:
+    Type: AWS::AutoScaling::LaunchConfiguration
+    Properties:
+      AssociatePublicIpAddress: "true"
+      IamInstanceProfile: !Ref InstanceProfile
+      ImageId: !Ref ImageID
+      InstanceType: t3.medium
+      KeyName: !Ref KeyPairName
+      SecurityGroups:
+        - !Ref NodesSecurityGroup
+      BlockDeviceMappings:
+        - DeviceName: /dev/xvda
+          Ebs:
+            VolumeSize: 8
+            VolumeType: gp2
+            DeleteOnTermination: true
+      UserData:
+        Fn::Base64: !Sub
+          - |
+            #!/bin/bash
+            set -o xtrace
+            /etc/eks/bootstrap.sh ${EksId}
+            /opt/aws/bin/cfn-signal --exit-code $? \
+                     --stack  ${AWS::StackName} \
+                     --resource NodesAutoScalingGroup  \
+                     --region ${AWS::Region}
+          - EksId:
+              Fn::ImportValue: !Sub "${EnvironmentName}-EKS"
+Outputs:
+  InstanceRole:
+    Description: The node instance role
+    Value: !GetAtt InstanceRole.Arn
+    Export:
+      Name: !Sub ${EnvironmentName}-IR
+  NodesSecurityGroup:
+    Description: The security group for the nodes.
+    Value: !Ref NodesSecurityGroup
+    Export:
+      Name: !Sub ${EnvironmentName}-NSG
