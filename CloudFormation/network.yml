@@ -25,22 +25,22 @@ Parameters:
   PublicSubnet3CIDR:
     Description: Please enter the IP range (CIDR notation) for the public subnet in the second Availability Zone
     Type: String
-    Default: 10.0.1.0/24
+    Default: 10.0.2.0/24
 
   PrivateSubnet1CIDR:
     Description: Please enter the IP range (CIDR notation) for the private subnet in the first Availability Zone
     Type: String
-    Default: 10.0.2.0/24
+    Default: 10.0.3.0/24
 
   PrivateSubnet2CIDR:
     Description: Please enter the IP range (CIDR notation) for the private subnet in the second Availability Zone
     Type: String
-    Default: 10.0.3.0/24
+    Default: 10.0.4.0/24
 
   PrivateSubnet3CIDR:
     Description: Please enter the IP range (CIDR notation) for the private subnet in the second Availability Zone
     Type: String
-    Default: 10.0.3.0/24
+    Default: 10.0.5.0/24
 
 Resources:
   VPC:
