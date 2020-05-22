@@ -5,7 +5,7 @@
   },
   {
     "ParameterKey": "KeyPairName",
-    "ParameterValue": "custome-key-pair"
+    "ParameterValue": "custom-key-pair"
   },
   {
     "ParameterKey": "DesiredInstances",
