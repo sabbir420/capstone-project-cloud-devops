@@ -67,6 +67,9 @@ Resources:
       ImageId: !Ref JenkinsImageID
       InstanceType: t3.small
       KeyName: !Ref KeyJenkinsSSH
+      Tags:
+        - Key: Name
+          Value: !Sub "${EnvironmentName}-JenkinsInstance"
 
   EIP:
     Type: AWS::EC2::EIP
