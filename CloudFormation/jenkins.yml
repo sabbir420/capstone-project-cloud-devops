@@ -29,8 +29,8 @@ Resources:
         Fn::ImportValue: !Sub "${EnvironmentName}-VPCID"
       SecurityGroupIngress:
         - IpProtocol: tcp
-          FromPort: 80
-          ToPort: 80
+          FromPort: 8080
+          ToPort: 8080
           CidrIp: 0.0.0.0/0
         - IpProtocol: tcp
           FromPort: 22
@@ -90,4 +90,4 @@ Resources:
 Outputs:
   Website:
     Description: The Public DNS for the EC2 Instance
-    Value: !Join ["", ["http://", !GetAtt "CapstoneEc2.PublicDnsName"]]
+    Value: !Join ["", ["http://", !GetAtt "CapstoneEc2.PublicDnsName", ":8080"]]
