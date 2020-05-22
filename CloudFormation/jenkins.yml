@@ -46,13 +46,14 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo apt-get update -y
-          sudo apt-get install default-jdk wget -y
-          cd /home/ubuntu
+          sudo apt-get update
+          sudo apt install -y default-jdk
+          sudo apt-get install nginx
           wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | sudo apt-key add -
-          sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
-          sudo apt-get update -y
-          sudo apt-get install jenkins tidy -y
+          sudo sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+          sudo apt-get update
+          sudo apt-get install -y jenkins
+          sudo apt-get install -y tidy
           sudo systemctl status jenkins
       SecurityGroupIds:
         - Ref: CapstoneSG
