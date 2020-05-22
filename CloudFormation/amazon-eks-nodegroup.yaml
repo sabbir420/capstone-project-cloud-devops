@@ -34,6 +34,7 @@ Resources:
       Path: "/"
       Roles:
         - !Ref InstanceRole
+
   InstanceRole:
     Type: AWS::IAM::Role
     Properties:
@@ -51,6 +52,7 @@ Resources:
         - arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
         - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
         - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
+
   NodesSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
@@ -89,6 +91,7 @@ Resources:
             - EksId:
                 Fn::ImportValue: !Sub "${EnvironmentName}-EKS"
           Value: "owned"
+
   NodesAutoScalingGroup:
     Type: AWS::AutoScaling::AutoScalingGroup
     Properties:
@@ -148,6 +151,7 @@ Resources:
                      --region ${AWS::Region}
           - EksId:
               Fn::ImportValue: !Sub "${EnvironmentName}-EKS"
+
 Outputs:
   InstanceRole:
     Description: The node instance role

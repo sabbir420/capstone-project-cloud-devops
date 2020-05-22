@@ -1,0 +1,50 @@
+Description: >
+  Capstone project for Cloud DevOps Engineering Nanodegree
+  Author - Sabbir Hossain
+
+Parameters:
+  EnvironmentName:
+    Description: An Environment name that will be prefixed to resources
+    Type: String
+
+Resources:
+  ClusterRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - eks.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonEKSClusterPolicy
+
+  CapstoneEKS:
+    Type: AWS::EKS::Cluster
+    Properties:
+      Version: "1.13"
+      RoleArn: !GetAtt ClusterRole.Arn
+      ResourcesVpcConfig:
+        SecurityGroupIds:
+          - Fn::ImportValue: !Sub "${EnvironmentName}-SCG"
+        SubnetIds:
+          Fn::Split:
+            - ","
+            - Fn::ImportValue:
+                Fn::Sub: ${EnvironmentName}-PUB-NETS
+Outputs:
+  EksId:
+    Description: The EKS id.
+    Value: !Ref CapstoneEKS
+    Export:
+      Name: !Sub ${EnvironmentName}-EKS
+
+  EKSRoleArn:
+    Description: The role that Amazon EKS will use to create AWS resources for Kubernetes clusters
+    Value: !GetAtt ClusterRole.Arn
+    Export:
+      Name: !Sub "${EnvironmentName}-EKSRoleArn"
