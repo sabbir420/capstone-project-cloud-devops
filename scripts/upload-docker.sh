@@ -5,7 +5,7 @@
 
 # Step 1:
 # Create dockerpath
-dockerpath=sabbir33/capstone-app
+dockerpath="sabbir33/capstone-app"
 
 
 # Step 2:  
