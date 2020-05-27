@@ -26,18 +26,20 @@ pipeline {
          }
          stage('Deployment') {
               steps {
-                   sshagent(['kube-machine']) {
-                      sh "scp -o StrictHostKeyChecking=no deployment/deployment.yml ec2-user@34.219.17.95:/home/ec2-user/"
-                      script{
-                          try{
-                              sh "ssh ec2-user@34.219.17.95 kubectl apply -f ."
-                          }
-                          catch(error){
-                              sh "ssh ec2-user@34.219.17.95 kubectl create -f ."
-                          }
-                      }
+                //    sshagent(['kube-machine']) {
+                //       sh "scp -o StrictHostKeyChecking=no deployment/deployment.yml ec2-user@34.219.17.95:/home/ec2-user/"
+                //       script{
+                //           try{
+                //               sh "ssh ec2-user@34.219.17.95 kubectl apply -f ."
+                //           }
+                //           catch(error){
+                //               sh "ssh ec2-user@34.219.17.95 kubectl create -f ."
+                //           }
+                //       }
+                //    }
+                   withAWS(credentials: "aws") {
+                      sh 'kubectl apply -f deployment/deployment.yml'
                    }
-                
               }
          }
          stage('Clean Up') {
