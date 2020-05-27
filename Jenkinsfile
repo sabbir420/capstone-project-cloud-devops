@@ -26,9 +26,18 @@ pipeline {
          }
          stage('Deployment') {
               steps {
-                   withAWS(credentials: "aws") {
-                      sh 'kubectl apply -f deployment/deployment.yml'
+                   sshagent(['kube-machine']) {
+                      sh "scp -o StrictHostKeyChecking=no deployment/deployment.yml ec2-user@34.219.17.95:/home/ec2-user/"
+                      script{
+                          try{
+                              sh "ssh ec2-user@34.219.17.95 kubectl apply -f ."
+                          }
+                          catch(error){
+                              sh "ssh ec2-user@34.219.17.95 kubectl create -f ."
+                          }
+                      }
                    }
+                
               }
          }
          stage('Clean Up') {
