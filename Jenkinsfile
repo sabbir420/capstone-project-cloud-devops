@@ -13,7 +13,7 @@ pipeline {
          }
          stage('Build Docker Image') {
               steps {
-                  sh 'docker build -t capstone-project-cloud-devops .'
+                  sh 'sudo docker build -t capstone-project-cloud-devops .'
               }
          }
 
