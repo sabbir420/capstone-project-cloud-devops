@@ -1,15 +1,15 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: capstone-app
+  name: capstone-project-cloud-devops
   labels:
-    app: capstone-app
+    app: capstone-project-cloud-devops
   namespace: default
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: capstone-app
+      app: capstone-project-cloud-devops
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -18,7 +18,7 @@ spec:
   template:
     metadata:
       labels:
-        app: capstone-app
+        app: capstone-project-cloud-devops
     spec:
       containers:
         - image: sabbir33/capstone-project-cloud-devops
