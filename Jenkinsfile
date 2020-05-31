@@ -37,7 +37,7 @@ pipeline {
                       //sh "kubectl run capstone-project-cloud-devops --image=sabbir33/capstone-project-cloud-devops --port=80"
                       sh "kubectl describe svc capstone-project-cloud-devops"
                       //sh "kubectl expose deployment capstone-project-cloud-devops --type=LoadBalancer --name=capstone-project-cloud-devops-service"
-                      //sh "kubectl get service/capstone-project-cloud-devops-service"
+                      sh "kubectl get service/capstone-project-cloud-devops-service"
                   }
               }
         }
