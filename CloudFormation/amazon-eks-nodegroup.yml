@@ -129,7 +129,7 @@ Resources:
       AssociatePublicIpAddress: "true"
       IamInstanceProfile: !Ref InstanceProfile
       ImageId: !Ref ImageID
-      InstanceType: t3.medium
+      InstanceType: t2.micro
       KeyName: !Ref KeyPairName
       SecurityGroups:
         - !Ref NodesSecurityGroup
