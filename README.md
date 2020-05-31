@@ -55,17 +55,15 @@
 
 <h2>Deploying App to AWS</h2>
 
-<ul>
-  <li>Run 
-  	```
+<pre>
+	<code>
   		aws eks --region us-west-2 update-kubeconfig --name EKS-Name
   		kubectl apply -f aws/aws-auth-cm.yaml
   		kubectl apply -f deployment/deployment.yml
   		kubectl get nodes
   		kubectl get pods -o wide
-	```
-  </li>
-</ul>
+	</code>
+</pre>
 
 <h2>Cleaning App</h2>
 
