@@ -24,28 +24,28 @@ pipeline {
                   }
               }
          }
-         stage('Deployment') {
-              steps {
-                //    sshagent(['kube-machine']) {
-                //       sh "scp -o StrictHostKeyChecking=no deployment/deployment.yml ec2-user@34.219.17.95:/home/ec2-user/"
-                //       script{
-                //           try{
-                //               sh "ssh ec2-user@34.219.17.95 kubectl apply -f ."
-                //           }
-                //           catch(error){
-                //               sh "ssh ec2-user@34.219.17.95 kubectl create -f ."
-                //           }
-                //       }
-                //    }
-                   withAWS(credentials: "aws") {
-                      sh 'kubectl apply -f deployment/deployment.yml'
-                   }
+         stage('Deploying') {
+              steps{
+                  echo 'Deploying to AWS...'
+                  withAWS(credentials: 'aws', region: 'us-west-2') {
+                      sh "aws eks --region us-west-2 update-kubeconfig --name CapstoneEKS-DB2gb4pJR8za"
+                      sh "kubectl apply -f aws/aws-auth-cm.yaml"
+                      //sh "kubectl set image capstone-project-cloud-devops capstone-project-cloud-devops=capstone-project-cloud-devops:latest"
+                      sh "kubectl apply -f deployment/deployment.yml"
+                      sh "kubectl get nodes"
+                      sh "kubectl get pod -o wide"
+                      sh "kubectl get services -o wide"
+                      sh "kubectl describe svc capstone-project-cloud-devops"
+                      //sh "kubectl expose deployment capstone-project-cloud-devops --type=LoadBalancer --name=my-service"
+                      //sh "kubectl get services my-service"
+                  }
               }
-         }
-         stage('Clean Up') {
-              steps {
-                  sh 'docker system prune'
+        }
+        stage("Cleaning up") {
+              steps{
+                    echo 'Cleaning up...'
+                    sh "docker system prune"
               }
-         }
+        }
      }
 }
