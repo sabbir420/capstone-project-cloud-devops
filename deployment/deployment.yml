@@ -23,6 +23,21 @@ spec:
       containers:
         - image: sabbir33/capstone-project-cloud-devops
           imagePullPolicy: Always
-          name: capstone-app
+          name: capstone-project-cloud-devops
           ports:
             - containerPort: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: capstone-project-cloud-devops
+  labels:
+    app: capstone-project-cloud-devops
+spec:
+  type: LoadBalancer
+  selector:
+    app: capstone-project-cloud-devops
+  ports:
+    - port: 80
+      targetPort: 80
