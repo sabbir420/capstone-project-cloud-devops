@@ -58,8 +58,8 @@
 <ul>
   <li>Run 
   	<code>
-  		aws eks --region us-west-2 update-kubeconfig --name EKS-Name<br>
-  		kubectl apply -f aws/aws-auth-cm.yaml<br>
+  		aws eks --region us-west-2 update-kubeconfig --name EKS-Name<br/>
+  		kubectl apply -f aws/aws-auth-cm.yaml<br/>
   		kubectl apply -f deployment/deployment.yml
   		kubectl get nodes
   		kubectl get pods -o wide
