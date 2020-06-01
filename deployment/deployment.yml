@@ -40,5 +40,4 @@ spec:
     app: capstone-project-cloud-devops
   ports:
     - port: 80
-      nodePort: 31000
       targetPort: 80
