@@ -34,7 +34,7 @@ pipeline {
                       //sh "kubectl delete deployments capstone-project-cloud-devops"
                       //sh "kubectl delete service/capstone-project-cloud-devops"
                       sh "kubectl apply -f deployment/deployment.yml"
-                      //sh "kubectl get nodes"
+                      sh "kubectl get deployment"
                       sh "kubectl get pod -o wide"
                       //sh "kubectl run capstone-project-cloud-devops --image=sabbir33/capstone-project-cloud-devops --port=80"
                       sh "kubectl describe svc capstone-project-cloud-devops"
