@@ -129,14 +129,14 @@ Resources:
       AssociatePublicIpAddress: "true"
       IamInstanceProfile: !Ref InstanceProfile
       ImageId: !Ref ImageID
-      InstanceType: t2.micro
+      InstanceType: t2.medium
       KeyName: !Ref KeyPairName
       SecurityGroups:
         - !Ref NodesSecurityGroup
       BlockDeviceMappings:
         - DeviceName: /dev/xvda
           Ebs:
-            VolumeSize: 8
+            VolumeSize: 10
             VolumeType: gp2
             DeleteOnTermination: true
       UserData:
