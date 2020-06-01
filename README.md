@@ -15,7 +15,7 @@
 
 ***
 
-<p>I developed a CI/CD pipeline for micro services applications with either rolling deployment. I developed Continuous Integration steps, such as typographical checking (aka “linting”). I alse developed Contigeous Deployment steps. These includes:</p>
+<p>I developed a CI/CD pipeline for micro services applications with rolling deployment. I developed Continuous Integration steps, such as typographical checking (aka “linting”). I alse developed Contigeous Deployment steps. These includes:</p>
 
 <ul>
 	<li>Pushing the built Docker containers to the Docker repository</li>
