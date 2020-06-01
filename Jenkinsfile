@@ -31,8 +31,8 @@ pipeline {
                       sh "aws eks --region us-west-2 update-kubeconfig --name CapstoneEKS-Us1y6X0kjRKI"
                       sh "kubectl apply -f CloudFormation/aws-auth-cm.yaml"
                       //sh "kubectl set image capstone-project-cloud-devops capstone-project-cloud-devops=capstone-project-cloud-devops:latest"
-                      sh "kubectl delete deployments,svc capstone-project-cloud-devops-service"
-                      sh "kubectl create -f deployment/deployment.yml"
+                    
+                      sh "kubectl apply -f deployment/deployment.yml"
                       //sh "kubectl get nodes"
                       sh "kubectl get pod -o wide"
                       //sh "kubectl run capstone-project-cloud-devops --image=sabbir33/capstone-project-cloud-devops --port=80"
