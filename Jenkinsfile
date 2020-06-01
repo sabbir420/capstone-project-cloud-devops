@@ -36,6 +36,7 @@ pipeline {
                       sh "kubectl apply -f CloudFormation/green-controller.json"
                       sh "kubectl apply -f CloudFormation/blue-service.json"
                       sh "kubectl apply -f CloudFormation/blue-service.json"
+                      sh "kubectl get nodes"
                       sh "kubectl get deployment"
                       sh "kubectl get pod -o wide"
                   }
