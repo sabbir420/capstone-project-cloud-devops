@@ -42,11 +42,11 @@ pipeline {
                   }
               }
         }
-        stage("Cleaning up") {
+        /*stage("Cleaning up") {
               steps{
                     echo 'Cleaning up...'
                     sh "docker system prune"
               }
-        }
+        }*/
      }
 }
