@@ -31,7 +31,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: capstone-project-cloud-devops-service
+  name: capstone-project-cloud-devops
   labels:
     app: capstone-project-cloud-devops
 spec:
