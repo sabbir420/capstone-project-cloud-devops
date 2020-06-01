@@ -1,3 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: capstone-project-cloud-devops
+  labels:
+    run: capstone-project-cloud-devops
+spec:
+  type: NodePort
+  ports:
+  - port: 8080
+    targetPort: 80
+    nodePort: 31704
+    protocol: TCP
+    name: http
+  selector:
+    run: capstone-project-cloud-devops
+
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -27,17 +45,17 @@ spec:
           ports:
             - containerPort: 80
 
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: capstone-project-cloud-devops-service
-  labels:
-    app: capstone-project-cloud-devops
-spec:
-  type: LoadBalancer
-  selector:
-    app: capstone-project-cloud-devops
-  ports:
-    - port: 80
-      targetPort: 80
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: capstone-project-cloud-devops-service
+#   labels:
+#     app: capstone-project-cloud-devops
+# spec:
+#   type: LoadBalancer
+#   selector:
+#     app: capstone-project-cloud-devops
+#   ports:
+#     - port: 80
+#       targetPort: 80
