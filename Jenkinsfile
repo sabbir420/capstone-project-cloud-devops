@@ -32,7 +32,7 @@ pipeline {
                       sh "kubectl apply -f CloudFormation/aws-auth-cm.yaml"
                       //sh "kubectl set image capstone-project-cloud-devops capstone-project-cloud-devops=capstone-project-cloud-devops:latest"
                       sh "kubectl delete deployments capstone-project-cloud-devops"
-                      sh "kubectl delete service/capstone-project-cloud-devops"
+                      sh "kubectl delete service/capstone-project-cloud-devops-service"
                       sh "kubectl create -f deployment/deployment.yml"
                       //sh "kubectl get nodes"
                       sh "kubectl get pod -o wide"
