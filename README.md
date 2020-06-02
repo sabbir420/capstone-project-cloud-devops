@@ -2,7 +2,7 @@
 
 <h2>Project Overview</h2>
 
-<p> In this project I applied the skills and knowledge which were developed throughout the Cloud DevOps Nanodegree program. These include:</p>
+<p> In this project, I applied the skills and knowledge which were developed throughout the Cloud DevOps Nanodegree program. These include:</p>
 
 <ul>
 	<li>Working in AWS</li>
@@ -15,7 +15,7 @@
 
 ***
 
-<p>I developed a CI/CD pipeline for micro services applications with rolling deployment. I developed Continuous Integration steps, such as typographical checking (aka “linting”). I alse developed Contigeous Deployment steps. These includes:</p>
+<p>I developed a CI/CD pipeline for microservices applications with rolling deployment. I developed Continuous Integration steps, such as typographical checking (aka “linting”). I also developed Contiguous Deployment steps. These includes:</p>
 
 <ul>
 	<li>Pushing the built Docker containers to the Docker repository</li>
