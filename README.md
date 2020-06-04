@@ -2,7 +2,7 @@
 
 <h2>Project Overview</h2>
 
-<p> In this project, I applied the skills and knowledge which were developed throughout the Cloud DevOps Nanodegree program. These include:</p>
+<p> In this project, I applied the skills and knowledge which was developed throughout the Cloud DevOps Nanodegree program. These include:</p>
 
 <ul>
 	<li>Working in AWS</li>
@@ -19,7 +19,7 @@
 
 <ul>
 	<li>Pushing the built Docker containers to the Docker repository</li>
-	<li>Deploying these Docker containers to a small Kubernetes cluster. For Kubernetes cluster I used AWS EKS. To deploy your Kubernetes cluster using Cloudformation. I ran these from within Jenkins as an independent pipeline.</li>
+	<li>Deploying these Docker containers to a small Kubernetes cluster. For Kubernetes cluster I used AWS EKS. To deploy my Kubernetes cluster using Cloudformation. I ran these from Jenkins as an independent pipeline.</li>
 </ul>
 
 ***
